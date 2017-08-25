@@ -1,0 +1,12 @@
+<div id="mySidenav" class="sidenav" [ngStyle]="{ 'width': (opened? '70vw':'0px')}">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <a (click)="closeNav()" [routerLink]="['/pages/about']" href="#">About</a>
+  <a (click)="closeNav()" [routerLink]="['/pages/home']" href="#">Home</a>
+  <a (click)="closeNav()" href="#">Clients</a>
+  <a (click)="closeNav()" href="#">Contact</a>
+</div>
+<div>
+<span [ngStyle]="{ 'margin-left': (opened? '71%':'0px') }"style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+<router-outlet></router-outlet>
+footer
+</div>
