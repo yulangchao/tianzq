@@ -1,3 +1,4 @@
+// modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,20 +8,22 @@ import { PagesModule } from './pages/pages.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { SidebarModule } from 'ng-sidebar';
+import { AngularFireModule } from 'angularfire2';
 
+// components
 import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
 import { AuthComponent } from './auth/auth.component';
 
-
+// services
 import { AuthService } from './services';
 
-
-import { AngularFireModule } from 'angularfire2';
+// others
 import { environment } from '../environments/environment';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { SidebarModule } from 'ng-sidebar';
 
 
 
@@ -33,6 +36,7 @@ import { SidebarModule } from 'ng-sidebar';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     PagesModule,
@@ -42,7 +46,8 @@ import { SidebarModule } from 'ng-sidebar';
     NgbModule.forRoot(),
     SidebarModule.forRoot(),
     NgZorroAntdModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [
     AuthService,

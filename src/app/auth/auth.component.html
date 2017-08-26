@@ -7,15 +7,15 @@
 <div id="vidtop-content">
 <div class="container">
  <ul class="nav nav-pills">
-    <li class="active"><a data-toggle="pill" href="#home">Login</a></li>
-    <li><a data-toggle="pill" href="#menu1">Register</a></li>
+    <li class="active text-center"><a data-toggle="pill" href="#home" (click)="test()">Login</a></li>
+    <li class="text-center"><a data-toggle="pill" href="#menu1">Register</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h3>Login</h3>
+      
       <!--<div class="col-xs-10 col-xs-offset-1">
-          <nz-input [nzType]="'text'" [nzPlaceHolder]="'Enter your userName'">
+          <nz-input [nzType]="'text'" [nzPlaceHolder]="'Enter your email'">
             <ng-template #prefix>
               <i class="anticon anticon-user"></i>
             </ng-template>
@@ -26,26 +26,27 @@
             </ng-template>
           </nz-input>
       </div>-->
-    <div class="col-xs-10 col-xs-offset-1">
-          <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="_submitForm()">
+    <div class="col-xs-12">
+          <h3 class="text-center">Login</h3>
+          <form nz-form [formGroup]="validateFormLogin" class="login-form" (ngSubmit)="login()">
             <div nz-form-item>
-              <div nz-form-control [nzValidateStatus]="validateForm.controls.userName">
-                <nz-input formControlName="userName" [nzPlaceHolder]="'Username'" [nzSize]="'large'">
+              <div nz-form-control [nzValidateStatus]="validateFormLogin.controls.email">
+                <nz-input formControlName="email" [nzPlaceHolder]="'Email'" [nzSize]="'large'">
                   <ng-template #prefix>
-                    <i class="anticon anticon-user"></i>
+                      <i class="fa fa-envelope" aria-hidden="true"></i>
                   </ng-template>
                 </nz-input>
-                <div nz-form-explain *ngIf="validateForm.controls.userName.dirty&&validateForm.controls.userName.hasError('required')">Please input your username!</div>
+                <div nz-form-explain *ngIf="validateFormLogin.controls.email.dirty&&validateFormLogin.controls.email.hasError('required')">Please input your email!</div>
               </div>
             </div>
             <div nz-form-item>
-              <div nz-form-control [nzValidateStatus]="validateForm.controls.password">
+              <div nz-form-control [nzValidateStatus]="validateFormLogin.controls.password">
                 <nz-input formControlName="password" [nzType]="'password'" [nzPlaceHolder]="'Password'" [nzSize]="'large'">
                   <ng-template #prefix>
-                    <i class="anticon anticon-lock"></i>
+                    <i class="fa fa-lock" aria-hidden="true"></i>
                   </ng-template>
                 </nz-input>
-                <div nz-form-explain *ngIf="validateForm.controls.password.dirty&&validateForm.controls.password.hasError('required')">Please input your Password!</div>
+                <div nz-form-explain *ngIf="validateFormLogin.controls.password.dirty&&validateFormLogin.controls.password.hasError('required')">Please input your Password!</div>
               </div>
             </div>
             <div nz-form-item>
@@ -60,11 +61,60 @@
               </div>
             </div>
           </form>
+          <hr/>
+          <div>
+                <button class="btn btn-google" (click)="googleLogin()"><i class="fa fa-google" aria-hidden="true"></i>oogle</button>
+          </div>
     </div>
     </div>
     <div id="menu1" class="tab-pane fade">
-      <h3>Register</h3>
-      <p>todo</p>
+      <div class="col-xs-12">
+        <h3 class="text-center">Register</h3>
+        <form nz-form [formGroup]="validateFormRegister" (ngSubmit)="register()">
+            <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="7" [nzXs]="7">
+                <label for="email" nz-form-item-required>E-mail</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="17" [nzXs]="17" [nzValidateStatus]="getFormControl('email')">
+                <nz-input [nzSize]="'large'" formControlName="email" [nzId]="'email'"></nz-input>
+                <div nz-form-explain *ngIf="getFormControl('email').dirty&&getFormControl('email').hasError('email')">The input is not valid E-mail!</div>
+              </div>
+            </div>
+            <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="7" [nzXs]="7">
+                <label for="password" nz-form-item-required>Password</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="17" [nzXs]="17"  [nzValidateStatus]="getFormControl('password')">
+                <nz-input [nzSize]="'large'" formControlName="password" [nzType]="'password'" [nzId]="'password'" (ngModelChange)="updateConfirmValidator()"></nz-input>
+                <div nz-form-explain *ngIf="getFormControl('password').dirty&&getFormControl('password').hasError('required')">Please input your password!</div>
+              </div>
+            </div>
+            <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="7" [nzXs]="7">
+                <label for="checkPassword" nz-form-item-required>Confirm</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="17" [nzXs]="17"  [nzValidateStatus]="getFormControl('checkPassword')">
+                <nz-input [nzSize]="'large'" formControlName="checkPassword" [nzType]="'password'" [nzId]="'checkPassword'"></nz-input>
+                <div nz-form-explain *ngIf="getFormControl('checkPassword').dirty&&getFormControl('checkPassword').hasError('required')">Please confirm your password!</div>
+                <div nz-form-explain *ngIf="getFormControl('checkPassword').dirty&&getFormControl('checkPassword').hasError('confirm')">Two passwords that you enter is inconsistent!</div>
+              </div>
+            </div>
+            <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="7" [nzXs]="7">
+                  <label for="nickname" nz-form-item-required>Nickname</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="17" [nzXs]="17"  [nzValidateStatus]="getFormControl('nickname')">
+                <nz-input [nzSize]="'large'" formControlName="nickname" [nzId]="'nickname'"></nz-input>
+                <div nz-form-explain *ngIf="getFormControl('nickname').dirty&&getFormControl('nickname').hasError('required')">Please input your nickname!</div>
+              </div>
+            </div>
+            <div nz-form-item>
+              <div nz-form-control>
+                  <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">Register</button>
+              </div>
+            </div>
+          </form>
+      </div>
     </div>
   </div>
 </div>
