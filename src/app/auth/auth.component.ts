@@ -7,6 +7,8 @@ import {
   FormControl
 } from '@angular/forms';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -15,10 +17,13 @@ import {
 export class AuthComponent implements OnInit {
   validateFormLogin: FormGroup;
   validateFormRegister: FormGroup;
-  constructor(public authService: AuthService, private fb: FormBuilder) { }
+  constructor(public router:Router, public authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
     console.log(this.authService.userInfo);
+    if (this.authService.userInfo){
+      this.router.navigate(['/pages']);
+    }
     this.validateFormLogin = this.fb.group({
       email: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],

@@ -21,9 +21,7 @@ export class AuthService {
       (res) => {
            let id = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0]; 
            this.userInfo = JSON.parse(localStorage.getItem(id));
-           setTimeout(_ => {
-            this.router.navigate(['/pages']);
-          },1000);
+           location.reload();
       },
       (error) => {
            console.log(error);
